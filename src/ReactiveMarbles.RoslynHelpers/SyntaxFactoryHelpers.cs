@@ -380,6 +380,34 @@ namespace ReactiveMarbles.RoslynHelpers
                 closeBrace);
         }
 
+        /// <summary>
+        /// Creates a new <see cref="CastExpressionSyntax" /> instance.
+        /// </summary>
+        /// <param name="type">The type to cast.</param>
+        /// <param name="expression">The expression.</param>
+        /// <returns>The <see cref="CastExpressionSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static CastExpressionSyntax CastExpression(string type, ExpressionSyntax expression)
+        {
+            var openParen = Token(SyntaxKind.OpenParenToken);
+            var closeParen = Token(SyntaxKind.CloseParenToken);
+            return SyntaxFactory.CastExpression(openParen, IdentifierName(type), closeParen, expression);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="CastExpressionSyntax" /> instance.
+        /// </summary>
+        /// <param name="type">The type to cast.</param>
+        /// <param name="expression">The expression.</param>
+        /// <returns>The <see cref="CastExpressionSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static CastExpressionSyntax CastExpression(TypeSyntax type, ExpressionSyntax expression)
+        {
+            var openParen = Token(SyntaxKind.OpenParenToken);
+            var closeParen = Token(SyntaxKind.CloseParenToken);
+            return SyntaxFactory.CastExpression(openParen, type, closeParen, expression);
+        }
+
         /// <summary>Creates a new <see cref="ClassDeclarationSyntax" /> instance.</summary>
         /// <param name="identifier">The identifier.</param>
         /// <param name="modifiers">The modifiers.</param>

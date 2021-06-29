@@ -1586,7 +1586,7 @@ namespace ReactiveMarbles.RoslynHelpers
         {
             ParameterListSyntax parameterList = parameters is null || parameters.Count == 0 ? ParameterList() : ParameterList(parameters);
 
-            return SyntaxFactory.ParenthesizedLambdaExpression(default, parameterList, Token(SyntaxKind.ArrowExpressionClause).AddTrialingSpaces().AddLeadingSpaces(), block);
+            return SyntaxFactory.ParenthesizedLambdaExpression(default, parameterList, Token(SyntaxKind.EqualsGreaterThanToken).AddTrialingSpaces().AddLeadingSpaces(), block);
         }
 
         /// <summary>Creates a new <see cref="ParenthesizedLambdaExpressionSyntax" /> instance.</summary>

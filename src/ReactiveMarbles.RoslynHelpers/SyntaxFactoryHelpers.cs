@@ -1389,7 +1389,7 @@ namespace ReactiveMarbles.RoslynHelpers
 
             var namespaceToken = createLeadingNewLine ? Token(SyntaxKind.NamespaceKeyword).AddLeadingNewLines() : Token(SyntaxKind.NamespaceKeyword);
 
-            return SyntaxFactory.NamespaceDeclaration(namespaceToken, name, Token(SyntaxKind.OpenBraceToken).AddLeadingNewLines(), default, default, membersList, Token(SyntaxKind.CloseBraceToken), default);
+            return SyntaxFactory.NamespaceDeclaration(namespaceToken, name, Token(SyntaxKind.OpenBraceToken).AddLeadingNewLines(), default, default, membersList, Token(SyntaxKind.CloseBraceToken).AddLeadingNewLines(), default);
         }
 
         /// <summary>Creates a new <see cref="NullableTypeSyntax" /> instance.</summary>

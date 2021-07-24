@@ -1622,7 +1622,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <returns>The <see cref="PropertyDeclarationSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PropertyDeclarationSyntax PropertyDeclaration(string typeName, string identifier, IReadOnlyCollection<SyntaxKind> modifiers, IReadOnlyList<AccessorDeclarationSyntax> accessors, int level) =>
-            PropertyDeclaration(IdentifierName(typeName), identifier, default, modifiers, accessors, default, level);
+            PropertyDeclaration(IdentifierName(typeName), identifier, modifiers, accessors, level);
 
         /// <summary>Creates a new <see cref="PropertyDeclarationSyntax" /> instance.</summary>
         /// <param name="type">The type.</param>
@@ -1632,8 +1632,14 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="level">The indentation level.</param>
         /// <returns>The <see cref="PropertyDeclarationSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PropertyDeclarationSyntax PropertyDeclaration(TypeSyntax type, string identifier, IReadOnlyCollection<SyntaxKind> modifiers, IReadOnlyList<AccessorDeclarationSyntax> accessors, int level) =>
-            PropertyDeclaration(type, identifier, default, modifiers, accessors, default, level);
+        public static PropertyDeclarationSyntax PropertyDeclaration(TypeSyntax type, string identifier, IReadOnlyCollection<SyntaxKind> modifiers, IReadOnlyList<AccessorDeclarationSyntax> accessors, int level)
+        {
+            var name = Identifier(identifier).AddLeadingSpaces();
+            var modifiersList = modifiers?.Count > 0 ? TokenList(modifiers, level) : TokenList(modifiers);
+            var accessorList = AccessorList(accessors);
+
+            return SyntaxFactory.PropertyDeclaration(default, modifiersList, type, default, name, accessorList, default, default, default);
+        }
 
         /// <summary>Creates a new <see cref="PropertyDeclarationSyntax" /> instance.</summary>
         /// <param name="type">The type.</param>
@@ -1824,6 +1830,28 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <returns>The <see cref="ThisExpressionSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThisExpressionSyntax ThisExpression() => SyntaxFactory.ThisExpression();
+
+        /// <summary>Creates a new <see cref="ThrowStatementSyntax" /> instance.</summary>
+        /// <param name="attributes">The attributes.</param>
+        /// <param name="expression">The expression.</param>
+        /// <param name="level">The indentation level.</param>
+        /// <returns>The <see cref="ThrowStatementSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ThrowStatementSyntax ThrowStatement(IReadOnlyCollection<AttributeListSyntax> attributes, ExpressionSyntax expression, int level)
+        {
+            var attributeList = List(attributes, level, true);
+
+            return SyntaxFactory.ThrowStatement(attributeList, Token(SyntaxKind.ThrowStatement).AddTrialingSpaces(), expression, Token(SyntaxKind.SemicolonToken).AddTrialingNewLines());
+        }
+
+        /// <summary>Creates a new <see cref="ThrowExpressionSyntax" /> instance.</summary>
+        /// <param name="expression">The expression.</param>
+        /// <returns>The <see cref="ThrowExpressionSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ThrowExpressionSyntax ThrowExpression(ExpressionSyntax expression)
+        {
+            return SyntaxFactory.ThrowExpression(Token(SyntaxKind.ThrowStatement).AddTrialingSpaces(), expression);
+        }
 
         /// <summary>Creates a new <see cref="SyntaxToken" /> instance.</summary>
         /// <param name="kind">The kind of syntax.</param>

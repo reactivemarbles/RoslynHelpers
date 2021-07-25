@@ -812,6 +812,49 @@ namespace ReactiveMarbles.RoslynHelpers
             return SyntaxFactory.FieldDeclaration(attributeList, modifiersList, declaration, Token(SyntaxKind.SemicolonToken));
         }
 
+        /// <summary>Creates a new <see cref="ForEachStatementSyntax" /> instance.</summary>
+        /// <param name="typeName">The type name.</param>
+        /// <param name="name">the name.</param>
+        /// <param name="expression">The expression.</param>
+        /// <param name="statement">The statement.</param>
+        /// <param name="level">The level of indentation.</param>
+        /// <returns>The <see cref="ForEachStatementSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ForEachStatementSyntax ForEachStatement(string typeName, string name, ExpressionSyntax expression, StatementSyntax statement, int level) =>
+            ForEachStatement(Array.Empty<AttributeListSyntax>(), typeName, name, expression, statement, level);
+
+        /// <summary>Creates a new <see cref="ForEachStatementSyntax" /> instance.</summary>
+        /// <param name="attributes">The attributes.</param>
+        /// <param name="typeName">The type name.</param>
+        /// <param name="name">the name.</param>
+        /// <param name="expression">The expression.</param>
+        /// <param name="statement">The statement.</param>
+        /// <param name="level">The level of indentation.</param>
+        /// <returns>The <see cref="ForEachStatementSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ForEachStatementSyntax ForEachStatement(IReadOnlyCollection<AttributeListSyntax> attributes, string typeName, string name, ExpressionSyntax expression, StatementSyntax statement, int level)
+        {
+            var attributeList = List(attributes, level, true);
+            var type = IdentifierName(typeName).AddTrialingSpaces();
+            var identifier = Identifier(name).AddTrialingSpaces();
+            return SyntaxFactory.ForEachStatement(attributeList, default, Token(SyntaxKind.ForEachKeyword).AddTrialingSpaces(), Token(SyntaxKind.OpenParenToken), type, identifier, Token(SyntaxKind.InKeyword).AddTrialingSpaces(), expression, Token(SyntaxKind.CloseParenToken), statement);
+        }
+
+        /// <summary>Creates a new <see cref="ForStatementSyntax" /> instance.</summary>
+        /// <param name="declaration">The declaration.</param>
+        /// <param name="initializers">The initializers.</param>
+        /// <param name="conditional">the conditional.</param>
+        /// <param name="incrementers">The incrementers.</param>
+        /// <param name="statement">The statement.</param>
+        /// <returns>The <see cref="ForStatementSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ForStatementSyntax ForStatement(VariableDeclarationSyntax declaration, IReadOnlyList<ExpressionSyntax> initializers, ExpressionSyntax conditional, IReadOnlyList<ExpressionSyntax> incrementers, StatementSyntax statement)
+        {
+            var initializerList = SeparatedList(initializers);
+            var incrementersList = SeparatedList(incrementers);
+            return SyntaxFactory.ForStatement(default, Token(SyntaxKind.ForKeyword).AddTrialingSpaces(), Token(SyntaxKind.OpenParenToken), declaration, initializerList, Token(SyntaxKind.SemicolonToken).AddTrialingSpaces(), conditional, Token(SyntaxKind.SemicolonToken).AddTrialingSpaces(), incrementersList, Token(SyntaxKind.CloseParenToken), statement);
+        }
+
         /// <summary>Creates a new <see cref="GenericNameSyntax" /> instance.</summary>
         /// <param name="name">The name.</param>
         /// <returns>The <see cref="GenericNameSyntax" /> instance.</returns>

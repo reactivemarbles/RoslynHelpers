@@ -1656,6 +1656,14 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointerTypeSyntax PointerType(TypeSyntax type) => SyntaxFactory.PointerType(type);
 
+        /// <summary>Creates a new <see cref="PrefixUnaryExpressionSyntax" /> instance.</summary>
+        /// <param name="kind">The syntax kind.</param>
+        /// <param name="operand">The operand.</param>
+        /// <returns>The <see cref="PrefixUnaryExpressionSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static PrefixUnaryExpressionSyntax PrefixUnaryExpression(SyntaxKind kind, ExpressionSyntax operand) =>
+            SyntaxFactory.PrefixUnaryExpression(kind, operand);
+
         /// <summary>Creates a new <see cref="PropertyDeclarationSyntax" /> instance.</summary>
         /// <param name="typeName">The type.</param>
         /// <param name="identifier">The identifier.</param>

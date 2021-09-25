@@ -46,6 +46,10 @@ jobs:
       run: dotnet build --configuration=${{ env.configuration }} --verbosity=minimal --no-restore
       working-directory: src
 
+    - name: Pack
+      run: dotnet pack --configuration=${{ env.configuration }} --verbosity=minimal --no-restore
+      working-directory: src
+
     - uses: nuget/setup-nuget@v1
       name: Setup NuGet
 

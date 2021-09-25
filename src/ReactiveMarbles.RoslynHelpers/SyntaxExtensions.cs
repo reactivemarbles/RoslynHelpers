@@ -23,7 +23,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="number">The number of lines.</param>
         /// <returns>The updated token with the trivia.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SyntaxToken AddLeadingNewLines(this SyntaxToken item, int number = 1)
+        public static SyntaxToken AddLeadingNewLines(this in SyntaxToken item, int number = 1)
         {
             if (number == 0)
             {
@@ -41,7 +41,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="number">The number of lines.</param>
         /// <returns>The updated token with the trivia.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SyntaxToken AddTrialingNewLines(this SyntaxToken item, int number = 1)
+        public static SyntaxToken AddTrialingNewLines(this in SyntaxToken item, int number = 1)
         {
             if (number == 0)
             {
@@ -60,7 +60,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="numberSpaces">The number of spaces.</param>
         /// <returns>The updated token with the trivia.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SyntaxToken AddLeadingNewLinesAndSpaces(this SyntaxToken item, int numberNewLines = 1, int numberSpaces = 1)
+        public static SyntaxToken AddLeadingNewLinesAndSpaces(this in SyntaxToken item, int numberNewLines = 1, int numberSpaces = 1)
         {
             if (numberNewLines == 0 && numberSpaces == 0)
             {
@@ -80,7 +80,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="number">The number of spaces.</param>
         /// <returns>The updated token with the trivia.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SyntaxToken AddLeadingSpaces(this SyntaxToken item, int number = 1)
+        public static SyntaxToken AddLeadingSpaces(this in SyntaxToken item, int number = 1)
         {
             if (number == 0)
             {
@@ -98,7 +98,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="number">The number of spaces.</param>
         /// <returns>The updated token with the trivia.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SyntaxToken AddTrialingSpaces(this SyntaxToken item, int number = 1)
+        public static SyntaxToken AddTrialingSpaces(this in SyntaxToken item, int number = 1)
         {
             if (number == 0)
             {

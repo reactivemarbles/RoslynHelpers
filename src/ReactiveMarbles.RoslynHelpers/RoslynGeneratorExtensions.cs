@@ -27,7 +27,15 @@ namespace ReactiveMarbles.RoslynHelpers
         /// </summary>
         /// <param name="parameter">The parameter to generate the argument list for.</param>
         /// <returns>The argument list.</returns>
-        public static IReadOnlyCollection<ArgumentSyntax> GenerateArgumentList(this IParameterSymbol parameter) => new[] { Argument(parameter.Name.GetKeywordSafeName()) };
+        public static IReadOnlyCollection<ArgumentSyntax> GenerateArgumentList(this IParameterSymbol parameter)
+        {
+            if (parameter is null)
+            {
+                throw new ArgumentNullException(nameof(parameter));
+            }
+
+            return new[] { Argument(parameter.Name.GetKeywordSafeName()) };
+        }
 
         /// <summary>
         /// Generates a argument list for a tuple parameter.
@@ -43,6 +51,11 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <returns>The type syntax.</returns>
         public static TypeSyntax GenerateTupleType(this IReadOnlyCollection<(ITypeSymbol Type, string Name)> typeDescriptors)
         {
+            if (typeDescriptors is null)
+            {
+                throw new ArgumentNullException(nameof(typeDescriptors));
+            }
+
             var tupleTypes = new List<TupleElementSyntax>(typeDescriptors.Count);
 
             foreach (var typeDescriptor in typeDescriptors)
@@ -63,23 +76,24 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <returns>The argument list.</returns>
         public static TypeArgumentListSyntax GenerateObservableTypeArguments(this IMethodSymbol method)
         {
-            TypeArgumentListSyntax argumentList;
+            if (method is null)
+            {
+                throw new ArgumentNullException(nameof(method));
+            }
 
             // If we have no parameters, use the Unit type, if only one use the type directly, otherwise use a value tuple.
             if (method.Parameters.Length == 0)
             {
-                argumentList = TypeArgumentList(new[] { IdentifierName(RoslynCommonHelpers.ObservableUnitName) });
+                return TypeArgumentList(new[] { IdentifierName(RoslynCommonHelpers.ObservableUnitName) });
             }
             else if (method.Parameters.Length == 1)
             {
-                argumentList = TypeArgumentList(new[] { IdentifierName(method.Parameters[0].Type.GenerateFullGenericName()) });
+                return TypeArgumentList(new[] { IdentifierName(method.Parameters[0].Type.GenerateFullGenericName()) });
             }
             else
             {
-                argumentList = TypeArgumentList(new[] { TupleType(method.Parameters.Select(x => TupleElement(x.Type.GenerateFullGenericName(), x.Name)).ToList()) });
+                return TypeArgumentList(new[] { TupleType(method.Parameters.Select(x => TupleElement(x.Type.GenerateFullGenericName(), x.Name)).ToList()) });
             }
-
-            return argumentList;
         }
 
         /// <summary>
@@ -91,8 +105,13 @@ namespace ReactiveMarbles.RoslynHelpers
         public static IEnumerable<T> GetMembers<T>(this INamedTypeSymbol symbol)
             where T : ISymbol
         {
+            if (symbol is null)
+            {
+                throw new ArgumentNullException(nameof(symbol));
+            }
+
             var members = symbol.GetMembers();
-            for (int i = 0; i < members.Length; ++i)
+            for (var i = 0; i < members.Length; ++i)
             {
                 var member = members[i];
 
@@ -125,7 +144,7 @@ namespace ReactiveMarbles.RoslynHelpers
 
                 var members = namedType.GetMembers();
 
-                for (int memberIndex = 0; memberIndex < members.Length; memberIndex++)
+                for (var memberIndex = 0; memberIndex < members.Length; memberIndex++)
                 {
                     var member = members[memberIndex];
 
@@ -158,7 +177,7 @@ namespace ReactiveMarbles.RoslynHelpers
 
                     var invokeMethod = ((INamedTypeSymbol)eventSymbol.OriginalDefinition.Type).DelegateInvokeMethod;
 
-                    if (invokeMethod == null)
+                    if (invokeMethod is null)
                     {
                         continue;
                     }
@@ -195,6 +214,11 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <returns>The parameters.</returns>
         public static IReadOnlyList<ParameterSyntax> GenerateMethodParameters(this IMethodSymbol method)
         {
+            if (method is null)
+            {
+                throw new ArgumentNullException(nameof(method));
+            }
+
             if (method.Parameters.Length == 0)
             {
                 return Array.Empty<ParameterSyntax>();
@@ -213,8 +237,8 @@ namespace ReactiveMarbles.RoslynHelpers
         public static IEnumerable<T> GetBaseTypesAndThis<T>(this T type)
             where T : ITypeSymbol
         {
-            T? current = type;
-            while (current != null)
+            var current = type;
+            while (current is not null)
             {
                 yield return current;
                 current = (T?)current.BaseType;
@@ -231,8 +255,13 @@ namespace ReactiveMarbles.RoslynHelpers
         public static IEnumerable<T> GetBaseTypesAndThis<T>(this T type, Func<T?, bool> condition)
             where T : ITypeSymbol
         {
-            T? current = type;
-            while (current != null)
+            if (condition is null)
+            {
+                throw new ArgumentNullException(nameof(condition));
+            }
+
+            var current = type;
+            while (current is not null)
             {
                 if (condition.Invoke(current))
                 {
@@ -255,7 +284,15 @@ namespace ReactiveMarbles.RoslynHelpers
         /// </summary>
         /// <param name="currentType">The type to generate the arguments for.</param>
         /// <returns>A type descriptor including the generic arguments.</returns>
-        public static string GenerateFullGenericName(this ITypeSymbol currentType) => currentType.ToDisplayString(RoslynCommonHelpers.TypeFormat);
+        public static string GenerateFullGenericName(this ITypeSymbol currentType)
+        {
+            if (currentType is null)
+            {
+                throw new ArgumentNullException(nameof(currentType));
+            }
+
+            return currentType.ToDisplayString(RoslynCommonHelpers.TypeFormat);
+        }
 
         /// <summary>
         /// Gets base classes that match the conditions.
@@ -267,9 +304,14 @@ namespace ReactiveMarbles.RoslynHelpers
         public static IEnumerable<T> GetBasesWithCondition<T>(this T symbol, Func<T, bool> condition)
             where T : INamedTypeSymbol
         {
+            if (condition is null)
+            {
+                throw new ArgumentNullException(nameof(condition));
+            }
+
             var current = (T?)symbol.BaseType;
 
-            while (current != null)
+            while (current is not null)
             {
                 if (condition.Invoke(current))
                 {
@@ -287,18 +329,23 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <returns>The formatted string.</returns>
         public static string GetArityDisplayName(this ITypeSymbol namedTypeSymbol)
         {
+            if (namedTypeSymbol is null)
+            {
+                throw new ArgumentNullException(nameof(namedTypeSymbol));
+            }
+
             var items = new Stack<ITypeSymbol>();
 
-            ITypeSymbol current = namedTypeSymbol;
+            var current = namedTypeSymbol;
 
-            while (current != null)
+            while (current is not null)
             {
                 items.Push(current);
                 current = current.ContainingType;
             }
 
             var stringBuilder = new StringBuilder();
-            int i = 0;
+            var i = 0;
             while (items.Count != 0)
             {
                 var item = items.Pop();

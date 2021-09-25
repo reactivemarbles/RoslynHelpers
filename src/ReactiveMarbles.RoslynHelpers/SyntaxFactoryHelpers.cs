@@ -85,7 +85,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AccessorListSyntax AccessorList(IReadOnlyList<AccessorDeclarationSyntax>? accessors)
         {
-            if (accessors == null || accessors.Count == 0)
+            if (accessors is null || accessors.Count == 0)
             {
                 return SyntaxFactory.AccessorList();
             }
@@ -104,7 +104,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="refKind">The reference kind.</param>
         /// <returns>The <see cref="ArgumentSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ArgumentSyntax Argument(string argumentName, SyntaxToken refKind) => SyntaxFactory.Argument(null, refKind, IdentifierName(argumentName));
+        public static ArgumentSyntax Argument(string argumentName, in SyntaxToken refKind) => SyntaxFactory.Argument(null, refKind, IdentifierName(argumentName));
 
         /// <summary>Creates a new <see cref="ArgumentSyntax" /> instance.</summary>
         /// <param name="argumentName">The argument name.</param>
@@ -130,7 +130,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArgumentListSyntax ArgumentList(IReadOnlyCollection<ArgumentSyntax> nodes)
         {
-            if (nodes == null || nodes.Count == 0)
+            if (nodes is null || nodes.Count == 0)
             {
                 return ArgumentList();
             }
@@ -173,7 +173,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArrayRankSpecifierSyntax ArrayRankSpecifier(IReadOnlyCollection<int?> sizes)
         {
-            var sizeSpecifier = sizes.Select(x => x == null ? (ExpressionSyntax)OmittedArraySizeExpression() : LiteralExpression(x.Value)).ToList();
+            var sizeSpecifier = sizes.Select(x => x is null ? (ExpressionSyntax)OmittedArraySizeExpression() : LiteralExpression(x.Value)).ToList();
             return SyntaxFactory.ArrayRankSpecifier(SeparatedList(sizeSpecifier));
         }
 
@@ -184,7 +184,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArrayTypeSyntax ArrayType(TypeSyntax elementType, IReadOnlyCollection<ArrayRankSpecifierSyntax> rankSpecifiers)
         {
-            var rank = rankSpecifiers == null || rankSpecifiers.Count == 0 ? List(new[] { ArrayRankSpecifier() }) : List(rankSpecifiers);
+            var rank = rankSpecifiers is null || rankSpecifiers.Count == 0 ? List(new[] { ArrayRankSpecifier() }) : List(rankSpecifiers);
             return SyntaxFactory.ArrayType(elementType, rank);
         }
 
@@ -239,7 +239,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AttributeSyntax Attribute(string name, IReadOnlyCollection<AttributeArgumentSyntax>? arguments)
         {
-            if (name == null)
+            if (name is null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
@@ -274,7 +274,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AttributeArgumentListSyntax? AttributeArgumentList(IReadOnlyCollection<AttributeArgumentSyntax>? arguments)
         {
-            if (arguments == null || arguments.Count == 0)
+            if (arguments is null || arguments.Count == 0)
             {
                 return default;
             }
@@ -298,7 +298,7 @@ namespace ReactiveMarbles.RoslynHelpers
             var attributeList = SingletonSeparatedList(attribute);
 
             AttributeTargetSpecifierSyntax? attributeTarget = null;
-            if (target != null)
+            if (target is not null)
             {
                 attributeTarget = AttributeTargetSpecifier(target.Value);
             }
@@ -317,7 +317,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <returns>The <see cref="BaseListSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BaseListSyntax? BaseList(BaseTypeSyntax baseType) =>
-            baseType == null ? default : SyntaxFactory.BaseList(Token(SyntaxKind.ColonToken).AddLeadingSpaces().AddTrialingSpaces(), SingletonSeparatedList(baseType));
+            baseType is null ? default : SyntaxFactory.BaseList(Token(SyntaxKind.ColonToken).AddLeadingSpaces().AddTrialingSpaces(), SingletonSeparatedList(baseType));
 
         /// <summary>Creates a new <see cref="BaseListSyntax" /> instance.</summary>
         /// <param name="baseItems">The base types.</param>
@@ -325,7 +325,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BaseListSyntax? BaseList(IReadOnlyCollection<BaseTypeSyntax>? baseItems)
         {
-            if (baseItems == null || baseItems.Count == 0)
+            if (baseItems is null || baseItems.Count == 0)
             {
                 return default;
             }
@@ -367,7 +367,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BracketedArgumentListSyntax BracketedArgumentList(IReadOnlyCollection<ArgumentSyntax> nodes)
         {
-            if (nodes == null || nodes.Count == 0)
+            if (nodes is null || nodes.Count == 0)
             {
                 return SyntaxFactory.BracketedArgumentList();
             }
@@ -547,7 +547,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="level">The indentation level.</param>
         /// <returns>The <see cref="ConversionOperatorDeclarationSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ConversionOperatorDeclarationSyntax ConversionOperatorDeclaration(IReadOnlyCollection<AttributeListSyntax> attributes, IReadOnlyCollection<SyntaxKind> modifiers, SyntaxToken implicitOrExplicitKeyword, string type, IReadOnlyCollection<ParameterSyntax> parameters, int level)
+        public static ConversionOperatorDeclarationSyntax ConversionOperatorDeclaration(IReadOnlyCollection<AttributeListSyntax> attributes, IReadOnlyCollection<SyntaxKind> modifiers, in SyntaxToken implicitOrExplicitKeyword, string type, IReadOnlyCollection<ParameterSyntax> parameters, int level)
         {
             var attributeList = List(attributes, level, true);
             var modifiersList = attributes?.Count > 0 ? TokenList(modifiers, level) : TokenList(modifiers);
@@ -1017,7 +1017,7 @@ namespace ReactiveMarbles.RoslynHelpers
         public static SyntaxList<TNode> List<TNode>(IReadOnlyCollection<TNode>? nodes)
             where TNode : SyntaxNode
         {
-            if (nodes == null || nodes.Count == 0)
+            if (nodes is null || nodes.Count == 0)
             {
                 return default;
             }
@@ -1037,7 +1037,7 @@ namespace ReactiveMarbles.RoslynHelpers
         public static SyntaxList<TNode> List<TNode>(IReadOnlyCollection<TNode>? nodes, int level, bool lastNodeTrailingLine = false)
             where TNode : SyntaxNode
         {
-            if (nodes == null || nodes.Count == 0)
+            if (nodes is null || nodes.Count == 0)
             {
                 return default;
             }
@@ -1104,7 +1104,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="token">The token.</param>
         /// <returns>The <see cref="LiteralExpressionSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LiteralExpressionSyntax LiteralExpression(SyntaxKind syntaxKind, SyntaxToken token) => SyntaxFactory.LiteralExpression(syntaxKind, token);
+        public static LiteralExpressionSyntax LiteralExpression(SyntaxKind syntaxKind, in SyntaxToken token) => SyntaxFactory.LiteralExpression(syntaxKind, token);
 
         /// <summary>Creates a new <see cref="LiteralExpressionSyntax" /> instance.</summary>
         /// <param name="value">The value.</param>
@@ -1386,7 +1386,7 @@ namespace ReactiveMarbles.RoslynHelpers
         public static MethodDeclarationSyntax MethodDeclaration(IReadOnlyCollection<AttributeListSyntax>? attributes, IReadOnlyCollection<SyntaxKind>? modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax? explicitInterface, string identifier, IReadOnlyCollection<ParameterSyntax>? parameters, IReadOnlyCollection<TypeParameterConstraintClauseSyntax>? typeParameterConstraintClauses, IReadOnlyCollection<TypeParameterSyntax>? typeParameters, BlockSyntax? body, ArrowExpressionClauseSyntax? arrowSyntax, int level)
         {
             var name = SyntaxFactory.Identifier(identifier);
-            if (explicitInterface == null)
+            if (explicitInterface is null)
             {
                 name = name.AddLeadingSpaces();
             }
@@ -1506,7 +1506,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="level">The identation level.</param>
         /// <returns>The <see cref="OperatorDeclarationSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OperatorDeclarationSyntax OperatorDeclaration(IReadOnlyCollection<AttributeListSyntax> attributes, IReadOnlyCollection<SyntaxKind> modifiers, IReadOnlyCollection<ParameterSyntax> parameters, TypeSyntax returnType, SyntaxToken operatorToken, int level)
+        public static OperatorDeclarationSyntax OperatorDeclaration(IReadOnlyCollection<AttributeListSyntax> attributes, IReadOnlyCollection<SyntaxKind> modifiers, IReadOnlyCollection<ParameterSyntax> parameters, TypeSyntax returnType, in SyntaxToken operatorToken, int level)
         {
             var attributeList = List(attributes, level, true);
             var modifiersList = attributes?.Count > 0 ? TokenList(modifiers, level) : TokenList(modifiers);
@@ -1562,10 +1562,27 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="attributes">The attributes.</param>
         /// <param name="type">The type.</param>
         /// <param name="name">The name.</param>
+        /// <returns>The <see cref="ParameterSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ParameterSyntax Parameter(IReadOnlyCollection<AttributeListSyntax>? attributes, TypeSyntax type, string name) => Parameter(attributes, default, type.AddTrialingSpaces(), name, null);
+
+        /// <summary>Creates a new <see cref="ParameterSyntax" /> instance.</summary>
+        /// <param name="attributes">The attributes.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="name">The name.</param>
         /// <param name="equals">The equals clause.</param>
         /// <returns>The <see cref="ParameterSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ParameterSyntax Parameter(IReadOnlyCollection<AttributeListSyntax>? attributes, string type, string name, EqualsValueClauseSyntax equals) => Parameter(attributes, default, IdentifierName(type).AddTrialingSpaces(), name, equals);
+
+        /// <summary>Creates a new <see cref="ParameterSyntax" /> instance.</summary>
+        /// <param name="attributes">The attributes.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="equals">The equals clause.</param>
+        /// <returns>The <see cref="ParameterSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ParameterSyntax Parameter(IReadOnlyCollection<AttributeListSyntax>? attributes, TypeSyntax type, string name, EqualsValueClauseSyntax equals) => Parameter(attributes, default, type.AddTrialingSpaces(), name, equals);
 
         /// <summary>Creates a new <see cref="ParameterSyntax" /> instance.</summary>
         /// <param name="type">The type.</param>
@@ -1627,7 +1644,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ParenthesizedLambdaExpressionSyntax ParenthesizedLambdaExpression(IReadOnlyCollection<ParameterSyntax>? parameters, BlockSyntax block)
         {
-            ParameterListSyntax parameterList = parameters is null || parameters.Count == 0 ? ParameterList() : ParameterList(parameters);
+            var parameterList = parameters is null || parameters.Count == 0 ? ParameterList() : ParameterList(parameters);
 
             return SyntaxFactory.ParenthesizedLambdaExpression(default, parameterList, Token(SyntaxKind.EqualsGreaterThanToken).AddTrialingSpaces().AddLeadingSpaces(), block);
         }
@@ -1645,7 +1662,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ParenthesizedLambdaExpressionSyntax ParenthesizedLambdaExpression(IReadOnlyCollection<ParameterSyntax>? parameters, ExpressionSyntax block)
         {
-            ParameterListSyntax parameterList = parameters is null || parameters.Count == 0 ? ParameterList() : ParameterList(parameters);
+            var parameterList = parameters is null || parameters.Count == 0 ? ParameterList() : ParameterList(parameters);
 
             return SyntaxFactory.ParenthesizedLambdaExpression(default, parameterList, Token(SyntaxKind.EqualsGreaterThanToken).AddTrialingSpaces().AddLeadingSpaces(), block);
         }
@@ -1789,7 +1806,7 @@ namespace ReactiveMarbles.RoslynHelpers
         public static SeparatedSyntaxList<TNode> SeparatedList<TNode>(IReadOnlyCollection<TNode> nodes)
             where TNode : SyntaxNode
         {
-            if (nodes == null || nodes.Count == 0)
+            if (nodes is null || nodes.Count == 0)
             {
                 return default;
             }
@@ -1812,7 +1829,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SeparatedSyntaxList<EnumMemberDeclarationSyntax> SeparatedList(IReadOnlyCollection<EnumMemberDeclarationSyntax> nodes, int level)
         {
-            if (nodes == null || nodes.Count == 0)
+            if (nodes is null || nodes.Count == 0)
             {
                 return default;
             }
@@ -1916,7 +1933,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SyntaxTokenList TokenList(IReadOnlyCollection<SyntaxKind>? tokens)
         {
-            if (tokens == null || tokens.Count == 0)
+            if (tokens is null || tokens.Count == 0)
             {
                 return default;
             }
@@ -1938,7 +1955,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SyntaxTokenList TokenList(IReadOnlyCollection<SyntaxKind>? tokens, int level)
         {
-            if (tokens == null || tokens.Count == 0)
+            if (tokens is null || tokens.Count == 0)
             {
                 return default;
             }
@@ -1997,7 +2014,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="types">The types.</param>
         /// <returns>The <see cref="TypeArgumentListSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TypeArgumentListSyntax TypeArgumentList(IReadOnlyCollection<TypeSyntax> types) => types == null || types.Count == 0 ? SyntaxFactory.TypeArgumentList() : SyntaxFactory.TypeArgumentList(SeparatedList(types));
+        public static TypeArgumentListSyntax TypeArgumentList(IReadOnlyCollection<TypeSyntax> types) => types is null || types.Count == 0 ? SyntaxFactory.TypeArgumentList() : SyntaxFactory.TypeArgumentList(SeparatedList(types));
 
         /// <summary>Creates a new <see cref="TypeConstraintSyntax" /> instance.</summary>
         /// <param name="typeName">The type name.</param>
@@ -2048,7 +2065,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TypeParameterListSyntax? TypeParameterList(IReadOnlyCollection<TypeParameterSyntax>? parameters)
         {
-            if (parameters == null || parameters.Count == 0)
+            if (parameters is null || parameters.Count == 0)
             {
                 return default;
             }
@@ -2204,7 +2221,7 @@ namespace ReactiveMarbles.RoslynHelpers
 
         private static (SyntaxToken OpenParentheses, SyntaxToken ClosedParentheses) GetParentheses()
         {
-            var openingBrace = Token(SyntaxKind.OpenParenToken).AddTrialingSpaces();
+            var openingBrace = Token(SyntaxKind.OpenParenToken);
             var closingBrace = Token(SyntaxKind.CloseParenToken).AddTrialingSpaces();
 
             return (openingBrace, closingBrace);

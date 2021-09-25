@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <Authors>ReactiveUI Association Inc</Authors>
     <Description>A library to make roslyn operations easier.</Description>
-
+    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

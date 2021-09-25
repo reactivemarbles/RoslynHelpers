@@ -1909,7 +1909,17 @@ namespace ReactiveMarbles.RoslynHelpers
         {
             var attributeList = List(attributes, level, true);
 
-            return SyntaxFactory.ThrowStatement(attributeList, Token(SyntaxKind.ThrowStatement).AddTrialingSpaces(), expression, Token(SyntaxKind.SemicolonToken).AddTrialingNewLines());
+            return SyntaxFactory.ThrowStatement(attributeList, Token(SyntaxKind.ThrowKeyword).AddTrialingSpaces(), expression, Token(SyntaxKind.SemicolonToken).AddTrialingNewLines());
+        }
+
+        /// <summary>Creates a new <see cref="ThrowStatementSyntax" /> instance.</summary>
+        /// <param name="expression">The expression.</param>
+        /// <param name="level">The indentation level.</param>
+        /// <returns>The <see cref="ThrowStatementSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ThrowStatementSyntax ThrowStatement(ExpressionSyntax expression, int level)
+        {
+            return SyntaxFactory.ThrowStatement(default, Token(SyntaxKind.ThrowKeyword).AddTrialingSpaces(), expression, Token(SyntaxKind.SemicolonToken).AddTrialingNewLines());
         }
 
         /// <summary>Creates a new <see cref="ThrowExpressionSyntax" /> instance.</summary>
@@ -1918,7 +1928,7 @@ namespace ReactiveMarbles.RoslynHelpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThrowExpressionSyntax ThrowExpression(ExpressionSyntax expression)
         {
-            return SyntaxFactory.ThrowExpression(Token(SyntaxKind.ThrowStatement).AddTrialingSpaces(), expression);
+            return SyntaxFactory.ThrowExpression(Token(SyntaxKind.ThrowKeyword).AddTrialingSpaces(), expression);
         }
 
         /// <summary>Creates a new <see cref="SyntaxToken" /> instance.</summary>

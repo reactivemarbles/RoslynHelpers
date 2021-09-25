@@ -48,10 +48,15 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <returns>The event's obsolete information if there is any.</returns>
         public static AttributeListSyntax[] GenerateObsoleteAttributeList(ISymbol eventDetails)
         {
+            if (eventDetails is null)
+            {
+                throw new ArgumentNullException(nameof(eventDetails));
+            }
+
             var obsoleteAttribute = eventDetails.GetAttributes()
                 .FirstOrDefault(attr => attr.AttributeClass?.GetArityDisplayName().Equals("System.ObsoleteAttribute", StringComparison.InvariantCulture) ?? false);
 
-            if (obsoleteAttribute == null)
+            if (obsoleteAttribute is null)
             {
                 return Array.Empty<AttributeListSyntax>();
             }
@@ -59,7 +64,7 @@ namespace ReactiveMarbles.RoslynHelpers
             var message = obsoleteAttribute.ConstructorArguments.FirstOrDefault().Value?.ToString();
             var isError = bool.Parse(obsoleteAttribute.ConstructorArguments.ElementAtOrDefault(1).Value?.ToString() ?? bool.FalseString) ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression;
 
-            if (message != null && !string.IsNullOrWhiteSpace(message))
+            if (message is not null && !string.IsNullOrWhiteSpace(message))
             {
                 var attribute = Attribute(
                     "global::System.ObsoleteAttribute",

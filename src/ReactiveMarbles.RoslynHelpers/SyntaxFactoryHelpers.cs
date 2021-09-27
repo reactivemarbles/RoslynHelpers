@@ -200,7 +200,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="right">The right value.</param>
         /// <returns>The <see cref="AssignmentExpressionSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static AssignmentExpressionSyntax AssignmentExpression(SyntaxKind token, ExpressionSyntax left, ExpressionSyntax right) => SyntaxFactory.AssignmentExpression(token, left, right);
+        public static AssignmentExpressionSyntax AssignmentExpression(SyntaxKind token, ExpressionSyntax left, ExpressionSyntax right) => SyntaxFactory.AssignmentExpression(token, left, Token(GetAssignmentExpressionOperatorTokenKind(token)).AddLeadingSpaces().AddTrialingSpaces(), right);
 
         /// <summary>Creates a new <see cref="AssignmentExpressionSyntax" /> instance.</summary>
         /// <param name="token">The token.</param>
@@ -208,7 +208,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="right">The right value.</param>
         /// <returns>The <see cref="AssignmentExpressionSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static AssignmentExpressionSyntax AssignmentExpression(SyntaxKind token, ExpressionSyntax left, string right) => SyntaxFactory.AssignmentExpression(token, left, IdentifierName(right));
+        public static AssignmentExpressionSyntax AssignmentExpression(SyntaxKind token, ExpressionSyntax left, string right) => AssignmentExpression(token, left, IdentifierName(right));
 
         /// <summary>Creates a new <see cref="AssignmentExpressionSyntax" /> instance.</summary>
         /// <param name="token">The token.</param>
@@ -216,7 +216,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="right">The right value.</param>
         /// <returns>The <see cref="AssignmentExpressionSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static AssignmentExpressionSyntax AssignmentExpression(SyntaxKind token, string left, ExpressionSyntax right) => SyntaxFactory.AssignmentExpression(token, IdentifierName(left), right);
+        public static AssignmentExpressionSyntax AssignmentExpression(SyntaxKind token, string left, ExpressionSyntax right) => AssignmentExpression(token, IdentifierName(left), right);
 
         /// <summary>Creates a new <see cref="AssignmentExpressionSyntax" /> instance.</summary>
         /// <param name="token">The token.</param>
@@ -224,7 +224,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="right">The right value.</param>
         /// <returns>The <see cref="AssignmentExpressionSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static AssignmentExpressionSyntax AssignmentExpression(SyntaxKind token, string left, string right) => SyntaxFactory.AssignmentExpression(token, IdentifierName(left), IdentifierName(right));
+        public static AssignmentExpressionSyntax AssignmentExpression(SyntaxKind token, string left, string right) => AssignmentExpression(token, IdentifierName(left), IdentifierName(right));
 
         /// <summary>Creates a new <see cref="AttributeSyntax" /> instance.</summary>
         /// <param name="name">The name.</param>
@@ -890,7 +890,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <returns>The <see cref="IfStatementSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IfStatementSyntax IfStatement(ExpressionSyntax conditionStatement, StatementSyntax statement) =>
-            SyntaxFactory.IfStatement(default, Token(SyntaxKind.IfKeyword).AddTrialingSpaces(), Token(SyntaxKind.OpenParenToken).AddTrialingSpaces(), conditionStatement, Token(SyntaxKind.CloseParenToken).AddTrialingSpaces(), statement, null);
+            SyntaxFactory.IfStatement(default, Token(SyntaxKind.IfKeyword).AddTrialingSpaces(), Token(SyntaxKind.OpenParenToken), conditionStatement, Token(SyntaxKind.CloseParenToken), statement, null);
 
         /// <summary>Creates a new <see cref="IfStatementSyntax" /> instance.</summary>
         /// <param name="conditionStatement">The conditional statement.</param>
@@ -899,7 +899,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <returns>The <see cref="IfStatementSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IfStatementSyntax IfStatement(ExpressionSyntax conditionStatement, StatementSyntax statement, ElseClauseSyntax elseStatement) =>
-            SyntaxFactory.IfStatement(default, Token(SyntaxKind.IfKeyword).AddTrialingSpaces(), Token(SyntaxKind.OpenParenToken).AddTrialingSpaces(), conditionStatement, Token(SyntaxKind.CloseParenToken).AddTrialingSpaces(), statement, elseStatement);
+            SyntaxFactory.IfStatement(default, Token(SyntaxKind.IfKeyword).AddTrialingSpaces(), Token(SyntaxKind.OpenParenToken), conditionStatement, Token(SyntaxKind.CloseParenToken), statement, elseStatement);
 
         /// <summary>Creates a new <see cref="ImplicitElementAccessSyntax" /> instance.</summary>
         /// <param name="arguments">The arguments.</param>
@@ -1855,7 +1855,7 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <returns>The <see cref="SimpleLambdaExpressionSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SimpleLambdaExpressionSyntax SimpleLambdaExpression(ParameterSyntax parameter, ExpressionSyntax body) =>
-            SyntaxFactory.SimpleLambdaExpression(parameter, default, body);
+            SimpleLambdaExpression(parameter, default, body);
 
         /// <summary>Creates a new <see cref="SimpleLambdaExpressionSyntax" /> instance.</summary>
         /// <param name="parameter">The parameter.</param>
@@ -1863,7 +1863,39 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <returns>The <see cref="SimpleLambdaExpressionSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SimpleLambdaExpressionSyntax SimpleLambdaExpression(ParameterSyntax parameter, BlockSyntax body) =>
-            SyntaxFactory.SimpleLambdaExpression(parameter, body, default);
+            SimpleLambdaExpression(parameter, body, default);
+
+        /// <summary>Creates a new <see cref="SimpleLambdaExpressionSyntax" /> instance.</summary>
+        /// <param name="parameter">The parameter.</param>
+        /// <param name="block">The optional block. Use this or expression body.</param>
+        /// <param name="expressionBody">The optional expression body. Use this or block.</param>
+        /// <returns>The <see cref="SimpleLambdaExpressionSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SimpleLambdaExpressionSyntax SimpleLambdaExpression(ParameterSyntax parameter, BlockSyntax? block, ExpressionSyntax? expressionBody)
+        {
+            var token = Token(SyntaxKind.EqualsGreaterThanToken).AddLeadingSpaces().AddTrialingSpaces();
+
+            return SyntaxFactory.SimpleLambdaExpression(default, default, parameter, token, block, expressionBody);
+        }
+
+        /// <summary>Creates a new <see cref="SimpleLambdaExpressionSyntax" /> instance.</summary>
+        /// <param name="attributes">The attributes.</param>
+        /// <param name="modifiers">The modifiers.</param>
+        /// <param name="parameter">The parameter.</param>
+        /// <param name="block">The optional block. Use this or expression body.</param>
+        /// <param name="expressionBody">The optional expression body. Use this or block.</param>
+        /// <param name="level">The indentation level.</param>
+        /// <returns>The <see cref="SimpleLambdaExpressionSyntax" /> instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SimpleLambdaExpressionSyntax SimpleLambdaExpression(IReadOnlyCollection<AttributeListSyntax>? attributes, IReadOnlyCollection<SyntaxKind>? modifiers, ParameterSyntax parameter, BlockSyntax? block, ExpressionSyntax? expressionBody, int level)
+        {
+            var attributeList = List(attributes, level, true);
+            var modifiersList = attributes?.Count > 0 ? TokenList(modifiers, level) : TokenList(modifiers);
+
+            var token = Token(SyntaxKind.EqualsGreaterThanToken).AddLeadingSpaces().AddTrialingSpaces();
+
+            return SyntaxFactory.SimpleLambdaExpression(attributeList, modifiersList, parameter, token, block, expressionBody);
+        }
 
         /// <summary>
         /// Creates a new <see cref="SeparatedSyntaxList{TNode}"/> instance.
@@ -2256,6 +2288,26 @@ namespace ReactiveMarbles.RoslynHelpers
             }
 
             return items;
+        }
+
+        private static SyntaxKind GetAssignmentExpressionOperatorTokenKind(SyntaxKind kind)
+        {
+            return kind switch
+            {
+                SyntaxKind.SimpleAssignmentExpression => SyntaxKind.EqualsToken,
+                SyntaxKind.AddAssignmentExpression => SyntaxKind.PlusEqualsToken,
+                SyntaxKind.SubtractAssignmentExpression => SyntaxKind.MinusEqualsToken,
+                SyntaxKind.MultiplyAssignmentExpression => SyntaxKind.AsteriskEqualsToken,
+                SyntaxKind.DivideAssignmentExpression => SyntaxKind.SlashEqualsToken,
+                SyntaxKind.ModuloAssignmentExpression => SyntaxKind.PercentEqualsToken,
+                SyntaxKind.AndAssignmentExpression => SyntaxKind.AmpersandEqualsToken,
+                SyntaxKind.ExclusiveOrAssignmentExpression => SyntaxKind.CaretEqualsToken,
+                SyntaxKind.OrAssignmentExpression => SyntaxKind.BarEqualsToken,
+                SyntaxKind.LeftShiftAssignmentExpression => SyntaxKind.LessThanLessThanEqualsToken,
+                SyntaxKind.RightShiftAssignmentExpression => SyntaxKind.GreaterThanGreaterThanEqualsToken,
+                SyntaxKind.CoalesceAssignmentExpression => SyntaxKind.QuestionQuestionEqualsToken,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
         }
 
         private static void GetTypeValues(string identifier, IReadOnlyCollection<AttributeListSyntax>? attributes, IReadOnlyCollection<SyntaxKind>? modifiers, IReadOnlyCollection<MemberDeclarationSyntax>? members, IReadOnlyCollection<TypeParameterConstraintClauseSyntax>? typeParameterConstraintClauses, IReadOnlyCollection<TypeParameterSyntax>? typeParameters, IReadOnlyCollection<BaseTypeSyntax>? bases, int level, out SyntaxList<AttributeListSyntax> attributeList, out SyntaxToken name, out SyntaxTokenList modifiersList, out BaseListSyntax? baseList, out SyntaxList<MemberDeclarationSyntax> membersList, out TypeParameterListSyntax? typeParameterList, out SyntaxList<TypeParameterConstraintClauseSyntax> typeParameterConstraintList, out SyntaxToken openingBrace, out SyntaxToken closingBrace)

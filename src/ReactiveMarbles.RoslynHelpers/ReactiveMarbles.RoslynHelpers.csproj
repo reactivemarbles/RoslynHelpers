@@ -1,14 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <LangVersion>9</LangVersion>
     <Nullable>enable</Nullable>
     <Authors>ReactiveUI Association Inc</Authors>
     <Description>A library to make roslyn operations easier.</Description>
     <DevelopmentDependency>true</DevelopmentDependency>
-    <IncludeBuildOutput>false</IncludeBuildOutput>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <NoBuild>true</NoBuild>
+    <ContentTargetFolders>contentFiles</ContentTargetFolders>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="**\*.cs" PackagePath="any/any" Exclude="**\obj\**\*.cs" />
+    <Content Include="**\*.cs" Exclude="**\obj\**\*.cs" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any\$(PackageId)\%(RecursiveDir)" />
   </ItemGroup>
+
 </Project>

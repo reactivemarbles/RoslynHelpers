@@ -2,6 +2,8 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
+#pragma warning disable
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -298,7 +300,7 @@ namespace ReactiveMarbles.RoslynHelpers
             var attributeList = SingletonSeparatedList(attribute);
 
             AttributeTargetSpecifierSyntax? attributeTarget = null;
-            if (target is not null)
+            if (target != null)
             {
                 attributeTarget = AttributeTargetSpecifier(target.Value);
             }

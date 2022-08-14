@@ -2,15 +2,20 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>9</LangVersion>
     <Nullable>enable</Nullable>
     <Authors>ReactiveUI Association Inc</Authors>
     <Description>A library to make roslyn operations easier.</Description>
-    <DebugType>full</DebugType>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="**\*.cs" PackagePath="any/any" Exclude="**\obj\**\*.cs" />
+  </ItemGroup>
 </Project>

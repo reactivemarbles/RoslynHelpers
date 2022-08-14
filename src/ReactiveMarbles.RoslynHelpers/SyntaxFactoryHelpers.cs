@@ -1875,11 +1875,10 @@ namespace ReactiveMarbles.RoslynHelpers
         {
             var token = Token(SyntaxKind.EqualsGreaterThanToken).AddLeadingSpaces().AddTrialingSpaces();
 
-            return SyntaxFactory.SimpleLambdaExpression(default, default, parameter, token, block, expressionBody);
+            return SyntaxFactory.SimpleLambdaExpression(default(SyntaxTokenList), parameter, token, block, expressionBody);
         }
 
         /// <summary>Creates a new <see cref="SimpleLambdaExpressionSyntax" /> instance.</summary>
-        /// <param name="attributes">The attributes.</param>
         /// <param name="modifiers">The modifiers.</param>
         /// <param name="parameter">The parameter.</param>
         /// <param name="block">The optional block. Use this or expression body.</param>
@@ -1887,15 +1886,33 @@ namespace ReactiveMarbles.RoslynHelpers
         /// <param name="level">The indentation level.</param>
         /// <returns>The <see cref="SimpleLambdaExpressionSyntax" /> instance.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SimpleLambdaExpressionSyntax SimpleLambdaExpression(IReadOnlyCollection<AttributeListSyntax>? attributes, IReadOnlyCollection<SyntaxKind>? modifiers, ParameterSyntax parameter, BlockSyntax? block, ExpressionSyntax? expressionBody, int level)
+        public static SimpleLambdaExpressionSyntax SimpleLambdaExpression(IReadOnlyCollection<SyntaxKind>? modifiers, ParameterSyntax parameter, BlockSyntax? block, ExpressionSyntax? expressionBody, int level)
         {
-            var attributeList = List(attributes, level, true);
-            var modifiersList = attributes?.Count > 0 ? TokenList(modifiers, level) : TokenList(modifiers);
+            var modifiersList = TokenList(modifiers);
 
             var token = Token(SyntaxKind.EqualsGreaterThanToken).AddLeadingSpaces().AddTrialingSpaces();
 
-            return SyntaxFactory.SimpleLambdaExpression(attributeList, modifiersList, parameter, token, block, expressionBody);
+            return SyntaxFactory.SimpleLambdaExpression(modifiersList, parameter, token, block, expressionBody);
         }
+
+        /////// <summary>Creates a new <see cref="SimpleLambdaExpressionSyntax" /> instance.</summary>
+        /////// <param name="attributes">The attributes.</param>
+        /////// <param name="modifiers">The modifiers.</param>
+        /////// <param name="parameter">The parameter.</param>
+        /////// <param name="block">The optional block. Use this or expression body.</param>
+        /////// <param name="expressionBody">The optional expression body. Use this or block.</param>
+        /////// <param name="level">The indentation level.</param>
+        /////// <returns>The <see cref="SimpleLambdaExpressionSyntax" /> instance.</returns>
+        ////[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        ////public static SimpleLambdaExpressionSyntax SimpleLambdaExpression(IReadOnlyCollection<AttributeListSyntax>? attributes, IReadOnlyCollection<SyntaxKind>? modifiers, ParameterSyntax parameter, BlockSyntax? block, ExpressionSyntax? expressionBody, int level)
+        ////{
+        ////    var attributeList = List(attributes, level, true);
+        ////    var modifiersList = attributes?.Count > 0 ? TokenList(modifiers, level) : TokenList(modifiers);
+
+        ////    var token = Token(SyntaxKind.EqualsGreaterThanToken).AddLeadingSpaces().AddTrialingSpaces();
+
+        ////    return SyntaxFactory.SimpleLambdaExpression(attributeList, modifiersList, parameter, token, block, expressionBody);
+        ////}
 
         /// <summary>
         /// Creates a new <see cref="SeparatedSyntaxList{TNode}"/> instance.

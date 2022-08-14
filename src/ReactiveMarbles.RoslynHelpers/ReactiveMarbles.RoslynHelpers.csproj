@@ -15,6 +15,7 @@
     <NoBuild>true</NoBuild>
     <ContentTargetFolders>contentFiles</ContentTargetFolders>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);NU5123</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

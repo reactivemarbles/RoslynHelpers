@@ -5,8 +5,10 @@
     <IsTestProject>$(MSBuildProjectName.Contains('Tests'))</IsTestProject>
     <DebugType>portable</DebugType>
     <Authors>Glenn Watson</Authors>
-    <Copyright>Copyright (c) 2021 ReactiveUI Association Incorporated</Copyright>
+    <Company>ReactiveUI Association Inc</Company>
+    <Copyright>Copyright © 2020 - $([System.DateTime]::Now.ToString(yyyy)) $(Company)</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>docs\README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/reactivemarbles/RoslynHelpers</PackageProjectUrl>
     <PackageDescription>Helpers with the Roslyn system, useful for unit tests.</PackageDescription>
     <Owners>glennawatson</Owners>
@@ -34,6 +36,7 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\LICENSE" Pack="true" PackagePath="LICENSE" />
     <None Include="$(MSBuildThisFileDirectory)..\images\logo.png" Pack="true" PackagePath="" />
+    <None Include="$(MSBuildThisFileDirectory)..\README.md" Pack="true" PackagePath="\docs"/>
   </ItemGroup>
 
   <ItemGroup>

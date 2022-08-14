@@ -2,6 +2,8 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
+#pragma warning disable
+
 using System;
 using System.Linq;
 
@@ -64,7 +66,7 @@ namespace ReactiveMarbles.RoslynHelpers
             var message = obsoleteAttribute.ConstructorArguments.FirstOrDefault().Value?.ToString();
             var isError = bool.Parse(obsoleteAttribute.ConstructorArguments.ElementAtOrDefault(1).Value?.ToString() ?? bool.FalseString) ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression;
 
-            if (message is not null && !string.IsNullOrWhiteSpace(message))
+            if (message != null && !string.IsNullOrWhiteSpace(message))
             {
                 var attribute = Attribute(
                     "global::System.ObsoleteAttribute",

@@ -2,6 +2,8 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
+#pragma warning disable
+
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -115,12 +117,10 @@ namespace ReactiveMarbles.RoslynHelpers
             {
                 var member = members[i];
 
-                if (member is not T targetSymbol)
+                if (member is T targetSymbol)
                 {
-                    continue;
+                    yield return targetSymbol;
                 }
-
-                yield return targetSymbol;
             }
         }
 
@@ -148,7 +148,7 @@ namespace ReactiveMarbles.RoslynHelpers
                 {
                     var member = members[memberIndex];
 
-                    if (member is not IEventSymbol eventSymbol)
+                    if (!(member is IEventSymbol eventSymbol))
                     {
                         continue;
                     }
@@ -238,7 +238,7 @@ namespace ReactiveMarbles.RoslynHelpers
             where T : ITypeSymbol
         {
             var current = type;
-            while (current is not null)
+            while (current != null)
             {
                 yield return current;
                 current = (T?)current.BaseType;
@@ -261,7 +261,7 @@ namespace ReactiveMarbles.RoslynHelpers
             }
 
             var current = type;
-            while (current is not null)
+            while (current != null)
             {
                 if (condition.Invoke(current))
                 {
@@ -311,7 +311,7 @@ namespace ReactiveMarbles.RoslynHelpers
 
             var current = (T?)symbol.BaseType;
 
-            while (current is not null)
+            while (current != null)
             {
                 if (condition.Invoke(current))
                 {
@@ -338,7 +338,7 @@ namespace ReactiveMarbles.RoslynHelpers
 
             var current = namedTypeSymbol;
 
-            while (current is not null)
+            while (current != null)
             {
                 items.Push(current);
                 current = current.ContainingType;

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="**\*.cs" Exclude="**\obj\**\*.cs" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any\$(PackageId)\%(RecursiveDir)" />
+    <Compile Include="**\*.cs" Exclude="**\obj\**\*.cs" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any\$(PackageId)\%(RecursiveDir)" />
   </ItemGroup>
 
 </Project>

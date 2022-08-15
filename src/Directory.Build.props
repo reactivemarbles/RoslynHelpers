@@ -6,7 +6,7 @@
     <DebugType>portable</DebugType>
     <Authors>Glenn Watson</Authors>
     <Company>ReactiveUI Association Inc</Company>
-    <Copyright>Copyright © 2020 - $([System.DateTime]::Now.ToString(yyyy)) $(Company)</Copyright>
+    <Copyright>Copyright © 2019 - $([System.DateTime]::Now.ToString(yyyy)) $(Company)</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>docs\README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/reactivemarbles/RoslynHelpers</PackageProjectUrl>

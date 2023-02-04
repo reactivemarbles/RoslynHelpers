@@ -8,12 +8,14 @@
     <Description>A library to make roslyn operations easier.</Description>
     <DevelopmentDependency>true</DevelopmentDependency>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!-- Package the generator in the lib directory of the nuget package -->
     <IncludeBuildOutput>true</IncludeBuildOutput>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <NoBuild>true</NoBuild>
     <ContentTargetFolders>contentFiles</ContentTargetFolders>
+    <BuildFolder>$(OutDir)Bin\$(Configuration)\$(TargetFramework)\</BuildFolder>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <NoWarn>$(NoWarn);NU5123</NoWarn>
   </PropertyGroup>
@@ -23,6 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Package the generator in the analyser directory of the nuget package -->
+    <TfmSpecificPackageFile Include="$(BuildFolder)" Pack="true" PackagePath="analyzers\dotnet\cs" Visible="false" />
     <Compile Include="**\*.cs" Exclude="**\obj\**\*;**\bin\**\*" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any\$(PackageId)\%(RecursiveDir)" />
   </ItemGroup>
 

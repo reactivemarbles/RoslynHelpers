@@ -12,8 +12,9 @@ using System.Runtime.CompilerServices;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ReactiveMarbles.RoslynHelpers.Extensions;
 
-namespace ReactiveMarbles.RoslynHelpers
+namespace ReactiveMarbles.RoslynHelpers.Helpers
 {
     /// <summary>
     ///     Versions of the syntax factory that handles some trivia for us automatically, to avoid the NormalizeWhitespace

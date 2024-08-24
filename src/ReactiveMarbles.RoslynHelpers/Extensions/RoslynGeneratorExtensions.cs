@@ -14,10 +14,10 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ReactiveMarbles.RoslynHelpers.Helpers;
+using static ReactiveMarbles.RoslynHelpers.Helpers.SyntaxFactoryHelpers;
 
-using static ReactiveMarbles.RoslynHelpers.SyntaxFactoryHelpers;
-
-namespace ReactiveMarbles.RoslynHelpers
+namespace ReactiveMarbles.RoslynHelpers.Extensions
 {
     /// <summary>
     /// A common set of helper generator methods.

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <LangVersion>9</LangVersion>
+    <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <Authors>ReactiveUI Association Inc</Authors>
     <Description>A library to make roslyn operations easier.</Description>
@@ -16,10 +16,34 @@
     <ContentTargetFolders>contentFiles</ContentTargetFolders>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <NoWarn>$(NoWarn);NU5123</NoWarn>
+
+    <!-- Necessary polyfills -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+    <PolySharpIncludeGeneratedTypes>
+      <!--System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute;
+      System.Diagnostics.CodeAnalysis.MemberNotNullAttribute;
+      System.Diagnostics.CodeAnalysis.NotNullAttribute;
+      System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute;
+      System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute;
+      System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute;
+      System.Runtime.CompilerServices.CallerArgumentExpressionAttribute;
+      System.Runtime.CompilerServices.SkipLocalsInitAttribute;-->
+      System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute;
+      System.Diagnostics.CodeAnalysis.NotNullWhenAttribute;
+      System.Diagnostics.CodeAnalysis.UnscopedRefAttribute;
+      System.Runtime.CompilerServices.IsExternalInit;
+      System.Index;
+      System.Range;
+    </PolySharpIncludeGeneratedTypes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.10.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" PrivateAssets="all" />
+    <PackageReference Include="PolySharp" Version="1.14.1" PrivateAssets="all" >
+      <IncludeAssets>build; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

@@ -10,10 +10,10 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ReactiveMarbles.RoslynHelpers.Extensions;
+using static ReactiveMarbles.RoslynHelpers.Helpers.SyntaxFactoryHelpers;
 
-using static ReactiveMarbles.RoslynHelpers.SyntaxFactoryHelpers;
-
-namespace ReactiveMarbles.RoslynHelpers
+namespace ReactiveMarbles.RoslynHelpers.Helpers
 {
     /// <summary>
     /// Helper methods associated with the roslyn template generators.
